@@ -2,10 +2,7 @@
     require_once __DIR__."/../vendor/autoload.php";
     require_once __DIR__."/../src/Task.php";
 
-    session_start();
-    if (empty($_SESSION['list_of_tasks'])) {
-        $_SESSION['list_of_tasks'] = array();
-    }
+    $DB = new PDO('pgsql:host=localhost;dbname=to_do');
 
     $app = new Silex\Application();
 
