@@ -10,8 +10,7 @@
         <ul>
             {% for task in tasks %}
                 <li>{{ task.getDescription }}</li>
-                <li>{{ task.getDueDate }}</li>
-                <li>_______</li>
+                <li>{{ task.getDueDate }}</li> <br>
             {% endfor %}
         </ul>
     {% endif %}
@@ -23,7 +22,7 @@
         <label for='description'>Task Description</label>
         <input id='description' name='description' type='text'>
         <label for='due_date'>Task Due Date</label>
-        <input id='due_date' name='due_date' type='text'>
+        <input id='due_date' name='due_date' type='text' maxlength='11' required>
 
 
         <button type='submit'>Add task</button>

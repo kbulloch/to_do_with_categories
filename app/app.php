@@ -49,7 +49,7 @@
         $task = new Task($description, $id = null, $category_id, $due_date);
         $task->save();
         $category = Category::find($category_id);
-        return $app['twig']->render('category.html.twig', array('category' => $category, 'tasks' => $category->getTasks()));
+        return $app['twig']->render('category.html.twig', array('category' => $category, 'due_date' => $due_date, 'tasks' => $category->getTasks()));
     });
 
     $app->post("/delete_tasks", function() use ($app) {

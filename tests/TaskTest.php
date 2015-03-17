@@ -173,5 +173,31 @@
             $this->assertEquals($test_task, $result);
         }
 
+        function test_findDueDate()
+        {
+            //Arrange
+            $name = "Home stuff";
+            $id = null;
+            $test_category = new Category($name, $id);
+            $test_category->save();
+
+            $description = "Wash the dog";
+            $category_id = $test_category->getId();
+            $due_date = null;
+            $test_task = new Task($description, $id, $category_id, $due_date);
+            $test_task->save();
+
+            $description2 = "Water the lawn";
+            $test_task2 = new Task($description2, $id, $category_id, $due_date);
+            $test_task2->save();
+
+            //Act
+            $result = Task::find($test_task->getId());
+
+            //Assert
+            $this->assertEquals($test_task, $result);
+        }
+
+
     }
 ?>
