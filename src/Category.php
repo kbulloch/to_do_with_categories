@@ -57,15 +57,29 @@
 
         static function find($search_id)
         {
-            $found_category = null;
-            $categories = Category::getAll();
-            foreach($categories as $category) {
+            $found_category = null; //sets the variable to a null value.
+            $categories = Category::getAll(); //calls the result of the getAll function and sets it to the variable
+            foreach($categories as $category) { //verifies the match between the requested value and the existing data
                 $category_id = $category->getId();
                 if ($category_id == $search_id) {
                   $found_category = $category;
                 }
             }
-            return $found_category;
+            return $found_category;//show confirmed match
+        }
+
+        function getTasks()
+        {
+            $tasks = Array();
+            $returned_tasks = $GLOBALS['DB']->query("SELECT * FROM tasks WHERE category_id = {$this->getId()};");
+            foreach($returned_tasks as $task) {
+                $description = $task['description'];
+                $id = $task['id'];
+                $category_id = $task['category_id'];
+                $new_Task = new Task($description, $id, $category_id);
+                array_push($tasks, $new_Task);
+            }
+            return $tasks;
         }
     }
 ?>
