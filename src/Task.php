@@ -4,12 +4,14 @@ class Task
     private $description;
     private $category_id;
     private $id;
+    private $due_date;
 
-    function __construct($description, $id = null, $category_id)
+    function __construct($description, $id = null, $category_id, $due_date = null)
     {
         $this->description = $description;
         $this->id = $id;
         $this->category_id = $category_id;
+        $this->due_date = $due_date;
     }
 
     function getId()
@@ -42,6 +44,16 @@ class Task
         return $this->category_id;
     }
 
+    function setDueDate($new_due_date)
+    {
+        $this->due_date = (int) $new_due_date;
+    }
+
+    function getDueDate()
+    {
+        return $this->due_date;
+    }
+
     function save()//This function creates a new entry in our tables and ties the 'id #' to each object.
     {
         $statement = $GLOBALS['DB']->query("INSERT INTO tasks (description, category_id) VALUES ('{$this->getDescription()}', {$this->getCategoryId()}) RETURNING id;");
@@ -57,7 +69,8 @@ class Task
             $description = $task['description'];// Takes values from DB and sets a new variable name.
             $id = $task['id'];
             $category_id = $task['category_id'];
-            $new_task = new Task($description, $id, $category_id);// Places each value in a new Category array.
+            $due_date = $task['due_date'];
+            $new_task = new Task($description, $id, $category_id, $due_date);// Places each value in a new Category array.
             array_push($tasks, $new_task);
         }
         return $tasks;
