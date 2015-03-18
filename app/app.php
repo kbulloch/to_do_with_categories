@@ -16,34 +16,43 @@
     use Symfony\Component\HttpFoundation\Request;
     Request::enableHttpMethodParameterOverride();
 
+    //home page
+    //add a category here, list out all categories
     $app->get("/", function() use ($app) {
         return $app['twig']->render('index.html.twig', array('categories' => Category::getAll()));
     });
 
+    //no links lead here
+    //would list out all tasks in all categories
     $app->get("/tasks", function() use ($app) {
         return $app['twig']->render('tasks.html.twig', array('tasks' => Task::getAll()));
     });
 
+    //
     $app->get("/categories", function() use ($app) {
         return $app['twig']->render('categories.html.twig', array('categories' => Category::getAll()));
     });
 
+    //add a category using POST and shows the home page
     $app->post("/categories", function() use ($app) {
         $category = new Category($_POST['name']);
         $category->save();
         return $app['twig']->render('index.html.twig', array('categories' => Category::getAll()));
     });
 
+    //shows a certain category and relevant tasks
     $app->get("/categories/{id}", function($id) use ($app) {
         $category = Category::find($id);
         return $app['twig']->render('category.html.twig', array('category' => $category, 'tasks' => $category->getTasks()));
     });
 
+    //shows a form that allows editing the category name
     $app->get("/categories/{id}/edit", function($id) use ($app) {
         $category = Category::find($id);
         return $app['twig']->render('category_edit.html.twig', array('category' => $category));
     });
 
+    //updates the category name using HTML PATCH request
     $app->patch("/categories/{id}", function($id) use ($app) {
         $name = $_POST['name'];
         $category = Category::find($id);
