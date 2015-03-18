@@ -23,7 +23,7 @@
             //Arrange
             $name = "Work stuff";
             $id = null;
-            $test_category = new category($name, $id);
+            $test_category = new Category($name, $id);
             $test_category->save();
 
             $new_name = "Home stuff";
